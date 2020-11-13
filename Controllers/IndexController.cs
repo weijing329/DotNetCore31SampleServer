@@ -24,13 +24,17 @@ namespace DotNetCoreGoogleCloudPubSubPushSubscriberOnCloudRun.Controllers
     {
       var jsonMessage = JsonConvert.SerializeObject(message);
       Console.WriteLine(jsonMessage);
+
+      // For parameters check
       // HTTP 400
       // return BadRequest();
 
+      // Try-Catch exception
       // HTTP 500
       // return StatusCode(500);
 
-      // HTTP 204
+      // PubSub message acknowledgement
+      // HTTP 202
       return Accepted();
     }
   }
