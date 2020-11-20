@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DotNetCoreGoogleCloudPubSubPushSubscriberOnCloudRun
+namespace DotNetCore31SampleServer.GoogleCloud.PubSub
 {
   public class PubsubMessage
   {

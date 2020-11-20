@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetCore31SampleServer.GoogleCloud.PubSub;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace DotNetCoreGoogleCloudPubSubPushSubscriberOnCloudRun.Controllers
+namespace DotNetCore31SampleServer.WebAPI.Controllers
 {
   [ApiController]
   [Route("")]

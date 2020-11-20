@@ -23,4 +23,4 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Run the web service on container startup.
-ENTRYPOINT ["dotnet", "DotNetCoreGoogleCloudPubSubPushSubscriberOnCloudRun.dll"]
+ENTRYPOINT ["dotnet", "DotNetCore31SampleServer.dll"]
