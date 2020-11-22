@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetCore31SampleServer.GoogleCloud.Firestore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,11 @@ namespace DotNetCore31SampleServer
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddLogging();
       services.AddControllers();
+      services.AddSingleton<IFirestoreClient>(serviceProvider =>
+        new FirestoreClient(serviceProvider.GetService<ILoggerFactory>().CreateLogger<FirestoreClient>())
+      );
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
