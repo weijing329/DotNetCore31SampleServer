@@ -1,5 +1,6 @@
 using System;
 using System.Dynamic;
+using System.Text;
 using System.Threading.Tasks;
 using DotNetCore31SampleServer.GoogleCloud.PubSub;
 using Google.Cloud.Firestore;
@@ -28,6 +29,10 @@ namespace DotNetCore31SampleServer.GoogleCloud.Firestore
     public async Task SetPubSubMessageDoc(PubsubMessage message)
     {
       DocumentReference docRef = _db.Collection("PubSubMessage").Document(DateTime.UtcNow.ToString("o"));
+
+      // decode pubsub message data
+      string decodedMessageText = Encoding.UTF8.GetString(Convert.FromBase64String(message.message.data));
+      message.message.data = decodedMessageText;
 
       // Dirty workaround for Error: Unable to create converter
       // From: Google.Cloud.Firestore.Converters.ConverterCache.CreateConverter 
