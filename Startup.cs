@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetCore31SampleServer.Database;
+using DotNetCore31SampleServer.GoogleCloud.CloudSQL;
 using DotNetCore31SampleServer.GoogleCloud.Firestore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,10 +29,18 @@ namespace DotNetCore31SampleServer
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddLogging();
-      services.AddControllers();
       services.AddSingleton<IFirestoreClient>(serviceProvider =>
         new FirestoreClient(serviceProvider.GetService<ILoggerFactory>().CreateLogger<FirestoreClient>())
       );
+      services.AddSingleton<ISqlClient>(serviceProvider =>
+        new PostgreSqlClient(serviceProvider.GetService<ILoggerFactory>().CreateLogger<PostgreSqlClient>())
+      );
+      services.AddDbContext<ApplicationDbContext>((serviceProvider, optionsBuilder) =>
+        new ApplicationDbContext(
+          serviceProvider.GetService<ILoggerFactory>().CreateLogger<ApplicationDbContext>(),
+          serviceProvider.GetRequiredService<ISqlClient>()
+        ));
+      services.AddControllers();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
