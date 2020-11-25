@@ -17,6 +17,9 @@ namespace DotNetCore31SampleServer.GoogleCloud.CloudSQL
     public PostgreSqlClient(ILogger<PostgreSqlClient> logger)
     {
       _logger = logger;
+
+      NpgsqlConnection.GlobalTypeMapper.UseNodaTime();
+      NpgsqlConnection.GlobalTypeMapper.UseJsonNet();
       _connection = InitializeDatabase();
     }
 

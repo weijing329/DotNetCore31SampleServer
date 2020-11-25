@@ -12,7 +12,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="3.1.10" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Npgsql" Version="4.1.6" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NodaTime" Version="3.1.4" />
+    <PackageReference Include="Npgsql.Json.NET" Version="4.1.6" />
+    <PackageReference Include="Npgsql.NodaTime" Version="4.1.6" />
   </ItemGroup>
 
 

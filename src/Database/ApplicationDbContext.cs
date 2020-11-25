@@ -1,7 +1,10 @@
 using System.Data.Common;
 using DotNetCore31SampleServer.GoogleCloud.CloudSQL;
+using DotNetCore31SampleServer.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using NodaTime;
+using DotNetCore31SampleServer.ValueGenerators;
 
 namespace DotNetCore31SampleServer.Database
 {
@@ -17,6 +20,20 @@ namespace DotNetCore31SampleServer.Database
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql(_connection);
+            => optionsBuilder.UseNpgsql(_connection, o => o.UseNodaTime());
+
+    public DbSet<TestRecord> TestRecords { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    => modelBuilder.Entity<TestRecord>(entity =>
+    {
+      entity.Property(t => t.CreatedAt)
+        .HasDefaultValueSql("CURRENT_TIMESTAMP")
+        .ValueGeneratedOnAdd();
+      entity.Property(t => t.LastUpdated)
+        // .HasValueGenerator<NodaTimeInstantGenerator>()
+        .ValueGeneratedOnAddOrUpdate();
+      entity.UseXminAsConcurrencyToken();
+    });
   }
 }
